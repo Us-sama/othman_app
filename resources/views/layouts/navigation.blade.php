@@ -6,15 +6,38 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                        {{-- <x-application-logo class="block h-9 w-auto fill-current text-gray-800" /> --}}
+                        <img src="{{asset('build/assets/images/othman_app_logo.png')}}" class="block h-14     w-auto fill-current text-gray-800"/>
                     </a>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @role('chef')
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('demande.list')" :active="request()->routeIs('demande.list')">
+                        {{ __('Demandes') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('users.list')" :active="request()->routeIs('users.list')">
+                        {{ __('Utilisateurs') }}
+                    </x-nav-link>
+                    @endrole
+
+                    @role('admin')
+                    <x-nav-link :href="route('users.list')" :active="request()->routeIs('users.list')">
+                        {{ __('Utilisateurs') }}
+                    </x-nav-link>
+                    @endrole
+
+                    @role('agent')
+                    <x-nav-link :href="route('demande.list')" :active="request()->routeIs('demande.list')">
+                        {{ __('Demandes') }}
+                    </x-nav-link>
+                    @endrole
+
+
                 </div>
             </div>
 

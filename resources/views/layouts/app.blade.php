@@ -11,6 +11,16 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        {{-- jquery --}}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        {{-- datatable --}}
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.js"></script>
+
+        {{-- datePicker --}}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script>
+
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -25,6 +35,10 @@
                         {{ $header }}
                     </div>
                 </header>
+            @endif
+            @if(session('success'))
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 p-4 my-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                    <span class="font-medium">{{ session('success') }}</span></div>
             @endif
 
             <!-- Page Content -->

@@ -9,10 +9,15 @@ class Demande extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['requester_id', 'status', 'demand_files'];
+    protected $fillable = ['demandeur_id', 'status', 'demand_files','created_by'];
 
     public function demandeur()
     {
         return $this->belongsTo(Demandeur::class);
+    }
+
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

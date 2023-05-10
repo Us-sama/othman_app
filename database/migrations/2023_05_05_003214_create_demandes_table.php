@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('demandes', function (Blueprint $table) {
             $table->id();
+            // $table->unsignedInteger('demandeur_id');
+            // $table->foreign('demandeur_id')->references('id')->on('demandeurs')->onDelete('cascade');
+            $table->string('status');
+            $table->text('demand_files')->nullable();
             $table->timestamps();
         });
     }

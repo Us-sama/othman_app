@@ -30,10 +30,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-
+    //demandes
     Route::get('/demandes', [DemandeController::class, 'index'])->name('demande.list');
-    // Other agent routes...
-    //Demandes
+    Route::get('/demandes/{demande}/view',[DemandeController::class, 'view'])->name('demande.view');
+
+    Route::get('/demandes/create',[DemandeController::class, 'create'])->name('demande.create');
+    Route::post('/demands', [DemandeController::class, 'store'])->name('demande.store');
+
+    Route::get('/demandes/{demande}/view',[DemandeController::class, 'view'])->name('demande.view');
+    Route::put('/demands/{demand}', [DemandeController::class, 'update'])->name('demande.update');
+
+    Route::get('/demandes/{demande}/delete',[DemandeController::class, 'destroy'])->name('demande.destroy');
+
 
 
     //Users

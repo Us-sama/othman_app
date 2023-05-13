@@ -2,7 +2,9 @@
 
 namespace App\Http;
 
+use Exception;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
+use Illuminate\Http\Exceptions\PostTooLargeException;
 
 class Kernel extends HttpKernel
 {
@@ -64,4 +66,15 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
     ];
+
+
+    public function render($request, Exception $exception)
+    {
+        if ($exception instanceof PostTooLargeException) {
+            // Handle the exception here
+            return response()->view('errors.post_toolarge', [], 413);
+        }
+
+        return parent::render($request, $exception);
+    }
 }

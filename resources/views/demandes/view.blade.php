@@ -31,5 +31,49 @@
       </nav>
 </div>
 
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="grid gap-6 mb-6 md:grid-cols-2 bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between p-6 mb-4">
+
+
+        <div class="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <h5 class="mb-2 text-2xl mb-5 font-bold tracking-tight text-gray-900 dark:text-white w">
+                <i class="fa-regular fa-user mr-2"></i>
+                {{$demande->demandeur->Nom}}&nbsp;{{$demande->demandeur->Prenom}}
+
+            </h5>
+            <h6 class=" bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 mb-2 rounded-full dark:bg-purple-900 dark:text-purple-300 w-fit	">
+                <i class="fa-solid fa-id-card"></i>
+                {{$demande->demandeur->CIN}}
+            </h6>
+            <p class="font-normal text-gray-700 dark:text-gray-400">
+                <span class="font-bold text-gray-700 dark:text-gray-400">
+                    <i class="fa-solid fa-cake-candles mr-2"></i>
+                    Date de naissance : </span>
+                    le {{$demande->demandeur->birthdate}}
+            </p>
+        </div>
+        <div>
+            {{-- <button onclick="openModal()">
+                Show Modal
+            </button>
+            <x-modal name='payement-modal' :show="" maxWidth="lg" focusable>
+                <x-slot>
+                    <h1>this is a modal</h1>
+                </x-slot>
+            </x-modal> --}}
+        </div>
+
+
+
+
+    </div>
+</div>
+
 
 </x-app-layout>
+<script>
+    function openModal(){
+        window.dispatchEvent(new CustomEvent('show', { detail: 'payement-modal' }));
+        console.log('opened modal');
+    }
+</script>

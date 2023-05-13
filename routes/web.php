@@ -4,7 +4,7 @@ use App\Http\Controllers\DemandeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Spatie\Permission\Middlewares\RoleMiddleware;
+// use Spatie\Permission\Middlewares\checkUserRole;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'App\Http\Middleware\CheckUserRole:chef'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,21 +31,24 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //demandes
-    Route::get('/demandes', [DemandeController::class, 'index'])->name('demande.list');
-    Route::get('/demandes/{demande}/view',[DemandeController::class, 'view'])->name('demande.view');
+    Route::middleware('App\Http\Middleware\CheckUserRole:chef,agent')->group(function(){
+        Route::get('/demandes', [DemandeController::class, 'index'])->name('demande.list');
+        Route::get('/demandes/{demande}/view',[DemandeController::class, 'view'])->name('demande.view');
+        Route::get('/demandes/create',[DemandeController::class, 'create'])->name('demande.create');
+        Route::post('/demands', [DemandeController::class, 'store'])->name('demande.store');
 
-    Route::get('/demandes/create',[DemandeController::class, 'create'])->name('demande.create');
-    Route::post('/demands', [DemandeController::class, 'store'])->name('demande.store');
+        Route::get('/demandes/{demande}/view',[DemandeController::class, 'view'])->name('demande.view');
+        Route::put('/demands/{demand}', [DemandeController::class, 'update'])->name('demande.update');
 
-    Route::get('/demandes/{demande}/view',[DemandeController::class, 'view'])->name('demande.view');
-    Route::put('/demands/{demand}', [DemandeController::class, 'update'])->name('demande.update');
-
-    Route::get('/demandes/{demande}/delete',[DemandeController::class, 'destroy'])->name('demande.destroy');
-
-
+        Route::get('/demandes/{demande}/delete',[DemandeController::class, 'destroy'])->name('demande.destroy');
+    });
 
     //Users
-    Route::get('/users',[UserController::class, 'index'])->name('users.list');
+    Route::middleware('App\Http\Middleware\CheckUserRole:chef,admin')->group(function(){
+        Route::get('/users',[UserController::class, 'index'])->name('users.list');
+    });
+
+
 
 
 });

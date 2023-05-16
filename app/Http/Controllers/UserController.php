@@ -60,6 +60,7 @@ class UserController extends Controller
             $user->update($data);
 
             // Update the user's role
+            $user->removeRole($user->roles->first()->name);
             $user->assignRole($request->role);
 
             return redirect()->route('user.list')->with('success', 'Utilisateur mis à jour avec succès');
@@ -73,7 +74,9 @@ class UserController extends Controller
         if ($user->id === Auth::id()){
             return abort(403);
         }
-        $user->delete();
+
+        $user->active = false;
+        $user->save();
 
         return redirect()->route('user.list')->with('success', 'Utilisateur supprimée avec succès');
     }

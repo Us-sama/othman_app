@@ -47,15 +47,15 @@
                     <div class="grid gap-6 mb-6 md:grid-cols-2 block mt-2 p-6 bg-white border border-gray-200 rounded-lg shadow">
                         <div>
                             <label for="Nom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nom du demandeur</label>
-                            <input type="text" name="demandeur[Nom]" id="Nom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nom" required>
+                            <input required type="text" name="demandeur[Nom]" id="Nom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nom" required>
                         </div>
                         <div>
                             <label for="Prenom" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Prenom du demandeur</label>
-                            <input type="text" name="demandeur[Prenom]" id="Prenom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Prenom" required>
+                            <input required type="text" name="demandeur[Prenom]" id="Prenom" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Prenom" required>
                         </div>
                         <div>
                             <label for="CIN" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">CIN du demandeur</label>
-                            <input type="text" name="demandeur[CIN]" id="CIN" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="CIN" required>
+                            <input required type="text" name="demandeur[CIN]" id="CIN" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="CIN">
                             <p id="CIN-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Si le CIN existe déja les autres champs du demandeur seront négligés.</p>
                         </div>
                         <div>
@@ -64,7 +64,7 @@
                                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                   <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
                                 </div>
-                                <input datepicker type="text" name="demandeur[birthdate]" id="birthdate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="sélectionner une date"  datepicker-format="yyyy-mm-dd">
+                                <input required datepicker type="text" name="demandeur[birthdate]" id="birthdate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="sélectionner une date"  datepicker-format="yyyy-mm-dd">
                               </div>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                                         <p id="dropzone-label-text" class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Clicker ici pour uploader un fichier</span> ou glisser le fichier</p>
                                         <p class="text-xs text-gray-500 dark:text-gray-400"></p>
                                       </div>
-                                      <input type="file" name="demand_files" id="dropzone-file" class="hidden" />
+                                      <input type="file" name="demand_files" id="dropzone-file" class="hidden" required />
                                     </label>
                                   </div>
                             </div>

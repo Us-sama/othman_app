@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Demande;
 use App\Models\Demandeur;
+use App\Models\Formation;
 use Carbon\Carbon;
 use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class DemandeController extends Controller
 {
@@ -55,7 +57,7 @@ class DemandeController extends Controller
             $demandeur->demandes()->save($demande);
 
             // Store a success message in the session
-            session()->flash('success', 'Demande créée avec succès.');
+            session()->flash('success', 'Demande crée avec succès.');
 
             // Redirect back to the index page with the success message
             return redirect()->route('demande.list');
@@ -71,6 +73,52 @@ class DemandeController extends Controller
     public function view(Demande $demande){
         // dd($demande);
         $demandeur = $demande->demandeur;
-        return view('demandes.view', compact('demande','demandeur'));
+        $formations = Formation::all();
+        return view('demandes.view', compact('demande','demandeur','formations'));
+    }
+    public function storePaymentFile(Request $request, $demande)
+    {
+        $demande = Demande::findOrFail($demande);
+
+        $file = $request->file('payment_file');
+        $date = now()->format('YmdHis');
+        $filename = "{$date}_payment_{$file->getClientOriginalName()}";
+        $path = $file->storeAs('demandes/' . $filename);
+
+        $demande->status = 'Payé/en cours';
+        $demande->payment_file = $filename;
+        $demande->save();
+
+        return redirect()->back()->with('success', 'Payment file has been uploaded successfully.');
+    }
+
+    public function attachFormation(Request $request, $demande){
+        $demande = Demande::findOrFail($demande);
+        $demande->status = 'Approuvé';
+        $formation = Formation::findOrFail($request->input('formation'));
+        $formation->demandes()->save($demande);
+        $demande->save();
+
+        return redirect()->back()->with('success','demande attaché à la formation');
+
+    }
+
+    public function downloadFile($filename)
+    {
+        $path = 'demandes/' . $filename; // Replace with the path to your file in the storage
+        $headers = [
+            'Content-Type' => Storage::mimeType($path),
+        ];
+        return Storage::download($path, $filename, $headers);
+    }
+
+
+    public function destroy($demande)
+    {
+        // Assuming that $demande is a string containing the demand's ID
+        $demande_to_delete = Demande::findOrFail($demande);
+        Storage::delete('demandes/' . $demande_to_delete->demand_files); // delete the demand file from storage
+        $demande_to_delete->delete(); // delete the demand from the database
+        return redirect()->route('demande.list')->with('success', 'Demande supprimée avec succès.');
     }
 }

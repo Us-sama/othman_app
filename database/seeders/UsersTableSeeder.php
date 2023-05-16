@@ -16,23 +16,23 @@ class UsersTableSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'John Doe',
-                'email' => 'john@example.com',
+                'name' => 'othman admin',
+                'email' => 'admin@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'admin',
             ],
             [
-                'name' => 'Jane Smith',
-                'email' => 'jane@example.com',
+                'name' => 'othman agent',
+                'email' => 'agent@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'agent',
             ],
-            // [
-            //     'name' => 'Othman Bertal',
-            //     'email' => 'othmanbertal@example.com',
-            //     'password' => Hash::make('password'),
-            //     'role' => 'chef',
-            // ],
+            [
+                'name' => 'Othman Bertal',
+                'email' => 'othmanbertal@example.com',
+                'password' => Hash::make('password'),
+                'role' => 'chef',
+            ],
             // Add more user data as needed
         ];
 

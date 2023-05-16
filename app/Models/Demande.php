@@ -9,7 +9,7 @@ class Demande extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['demandeur_id', 'status', 'demand_files','created_by'];
+    protected $fillable = ['demandeur_id', 'status', 'demand_files','created_by','payment_file'];
 
     public function demandeur()
     {
@@ -19,5 +19,10 @@ class Demande extends Model
     public function creator()
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function formation()
+    {
+        return $this->belongsTo(Formation::class);
     }
 }

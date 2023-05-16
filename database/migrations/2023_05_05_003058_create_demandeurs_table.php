@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('Prenom');
             $table->string('CIN')->unique();
             $table->date('birthdate');
+            $table->string('payment_file')->nullable();
             $table->timestamps();
         });
     }

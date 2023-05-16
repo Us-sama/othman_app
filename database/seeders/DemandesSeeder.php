@@ -16,16 +16,16 @@ class DemandesSeeder extends Seeder
      */
     public function run(): void
     {
-        $faker = Faker::create();
+        // $faker = Faker::create();
 
-        for ($i = 0; $i < 10; $i++) {
-            Demande::create([
-                'demandeur_id' => Demandeur::all()->random()->id,
-                'status' => $faker->randomElement(['En attente', 'Approuvé', 'Payé/en cours']),
-                'demand_files' => $faker->file('path/to/demand_files', 'storage/app'),
-                'created_by' => User::all()->random()->id,
-                'payment_file' => $faker->file('path/to/payment_files', 'storage/app'),
-            ]);
-        }
+        // for ($i = 0; $i < 10; $i++) {
+        //     Demande::create([
+        //         'demandeur_id' => Demandeur::all()->random()->id,
+        //         'status' => $faker->randomElement(['En attente', 'Approuvé', 'Payé/en cours']),
+        //         'demand_files' => $faker->file('path/to/demand_files', 'storage/app'),
+        //         'created_by' => User::all()->random()->id,
+        //         'payment_file' => $faker->file('path/to/payment_files', 'storage/app'),
+        //     ]);
+        // }
     }
 }

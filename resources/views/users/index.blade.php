@@ -27,6 +27,7 @@
                     </thead>
                     <tbody>
                         @foreach($users as $user)
+                        @if($user->active)
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td>{{ $user->name }}</td>
@@ -34,15 +35,15 @@
                             <td>
                                 @if($user->roles->first()->name == 'chef')
 
-                                    <span class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">{{ $user->roles->first()->name }}</span>
+                                <span class="bg-purple-100 text-purple-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-purple-400 border border-purple-400">{{ $user->roles->first()->name }}</span>
                                 @endif
                                 @if($user->roles->first()->name == 'admin')
 
-                                    <span class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">{{ $user->roles->first()->name }}</span>
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-yellow-300 border border-yellow-300">{{ $user->roles->first()->name }}</span>
                                 @endif
                                 @if($user->roles->first()->name == 'agent')
 
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{{ $user->roles->first()->name }}</span>
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">{{ $user->roles->first()->name }}</span>
                                 @endif
                             </td>
 
@@ -51,11 +52,11 @@
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <i class="fa-solid fa-ellipsis-vertical cursor-pointer"></i>
-                                      </x-slot>
-                                      <x-slot name="content">
+                                    </x-slot>
+                                    <x-slot name="content">
                                         <x-dropdown-link href="{{route('user.edit', $user)}}" ><i class="fa-regular fa-pen-to-square mr-2"></i>Modifier</x-dropdown-link>
                                         <x-dropdown-link x-on:click.prevent="$dispatch('open-modal', 'confirm-user{{$user->id}}-deletion')"><i class="fa-regular fa-trash-can mr-2"></i>Supprimer</x-dropdown-link>
-                                      </x-slot>
+                                    </x-slot>
 
                                 </x-dropdown>
                             </td>
@@ -80,6 +81,7 @@
                             </div>
                         </x-modal>
 
+                        @endif
                         @endforeach
                     </tbody>
 

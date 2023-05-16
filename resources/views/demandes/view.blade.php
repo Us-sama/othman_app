@@ -31,8 +31,8 @@
       </nav>
 </div>
 
-<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-    <div class="grid gap-6 mb-6 md:grid-cols-2 bg-white overflow-hidden shadow-sm sm:rounded-lg flex justify-between p-6 mb-4">
+<div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+    <div class="grid gap-6 mb-6 md:grid-cols-2  flex justify-between  mb-4">
 
 
         <div class="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -45,28 +45,145 @@
                 <i class="fa-solid fa-id-card"></i>
                 {{$demande->demandeur->CIN}}
             </h6>
-            <p class="font-normal text-gray-700 dark:text-gray-400">
+            <p class="font-normal text-gray-700 dark:text-gray-400 mb-4">
                 <span class="font-bold text-gray-700 dark:text-gray-400">
                     <i class="fa-solid fa-cake-candles mr-2"></i>
                     Date de naissance : </span>
                     le {{$demande->demandeur->birthdate}}
             </p>
+            <a href="{{route('demande.downloadFile',$demande->demand_files)}}" class="">
+                <i class="fa-solid fa-download mr-2"></i>
+                Voir les fichiers du demandeurs
+            </a>
         </div>
         <div>
-            {{-- <button onclick="openModal()">
-                Show Modal
-            </button>
-            <x-modal name='payement-modal' :show="" maxWidth="lg" focusable>
-                <x-slot>
-                    <h1>this is a modal</h1>
-                </x-slot>
-            </x-modal> --}}
+            @if(!$demande->payment_file)
+            <div class="block w-full p-6 bg-red-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="text-3xl">
+
+                </div>
+
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-red-900 dark:text-white"><i class="fa-solid fa-money-check-dollar mr-2"></i>Paiement non effectué !</h5>
+                </a>
+
+                <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Ajouter un paiement pour que vous pouvez passer a la prochaine étape:
+                    <br>
+                    Appuyer sur le bouton si dessous pour ajouter un paiement
+                </p>
+                 {{-- <a href="#" x-on:click.prevent="$dispatch('open-modal', 'confirm-demande{{$demande->id}}-payement')">
+                    <i class="fa-regular fa-credit-card mr-2"></i>
+                    Ajouter le paiement
+                </a> --}}
+
+                <x-primary-button
+                    x-data=""
+                    x-on:click.prevent="$dispatch('open-modal', 'confirm-demande-payement')"
+                    class="my-2"
+                > <i class="fa-regular fa-credit-card mr-2"></i>{{ __('Ajouter un paiement') }}</x-primary-button>
+
+                <x-modal name="confirm-demande-payement" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                    <form method="POST" action="{{ route('demande.storePaymentFile',$demande) }}" class="p-6" enctype="multipart/form-data">
+                        @csrf
+
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('Ajouter le paiement.') }}
+                        </h2>
+
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ __('Télecharger le fichier du paiement dans la case si dessous.') }}
+                        </p>
+
+                        <div class="mt-6">
+                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="payment_file" type="file">
+                        </div>
+
+                        <div class="mt-6 flex justify-end">
+                            <x-secondary-button x-on:click="$dispatch('close')">
+                                {{ __('Cancel') }}
+                            </x-secondary-button>
+
+                            <x-primary-button class="ml-3" type="submit">
+                                {{ __('Ajouter le paiement') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </x-modal>
+
+
+            </div>
+
+
+            @else
+
+            <div class="block w-full p-6 bg-emerald-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <div class="text-3xl">
+
+                </div>
+
+                <a href="#">
+                    <h5 class="mb-2 text-2xl font-semibold tracking-tight text-Emerald-900 dark:text-white"><i class="fa-solid fa-money-check-dollar mr-2"></i>Paiement effectué !</h5>
+                </a>
+
+                <p class="font-normal text-gray-500 dark:text-gray-400 text-xl">Le paiement est bien effectué
+                </p>
+                <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">
+                    Telecharger ou modifier le fichier du paiement:
+                </p>
+                <div class="flex justify-between my-4">
+                    {{-- <a href="#" >
+                        <i class="fa-solid fa-pen mr-2"></i>
+                        Modifier le paiement
+                    </a> --}}
+
+                    <a href="{{route('demande.downloadFile',$demande->payment_file)}}" class="">
+                        <i class="fa-solid fa-download mr-2"></i>
+                        Telecharger le paiement
+                    </a>
+                </div>
+            </div>
+            @endif
+        </div>
+    </div>
+
+    @if(!$demande->payment_file)
+
+    <div class="block w-full p-6 text-center bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 " >
+        <h2 class="text-rose-500 font-semibold">Veuiller ajouter un paiement pour pouvoir continuer.</h2>
+    </div>
+    @else
+
+
+        <div class="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 " >
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Affecter a une formation') }}
+            </h2>
+            <div class="my-4">
+                <form action="{{route('demande.attachFormation',$demande)}}" method="POST">
+                    @csrf
+                    <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selectionner une formation</label>
+                    <select id="foramtion" name="formation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @foreach($formations as $formation)
+                        <option value="{{$formation->id}}">{{$formation->name}}</option>
+                        @endforeach
+                    </select>
+                    <div class="m-4 flex justify-end">
+                        <x-primary-button
+                        x-data=""
+                        type="submit"
+                        class="my-2 disabled:opacity-25"
+                        >
+                        <i class="fa-regular fa-credit-card mr-2"></i>
+                        {{ __('Affecter à la formation') }}
+                    </x-primary-button>
+                </div>
+
+            </form>
+
         </div>
 
-
-
-
-    </div>
+    @endif
+</div>
 </div>
 
 

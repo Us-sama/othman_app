@@ -79,20 +79,40 @@
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <i class="fa-solid fa-ellipsis-vertical cursor-pointer"></i>
-                                      </x-slot>
-                                      <x-slot name="content">
-                                        <x-dropdown-link href="{{route('demande.view',$demande)}}"><i class="fa-regular fa-eye mr-2"></i>Voir</x-dropdown-link>
-                                        <x-dropdown-link><i class="fa-regular fa-pen-to-square mr-2"></i>Modifier</x-dropdown-link>
-                                        <x-dropdown-link><i class="fa-regular fa-trash-can mr-2"></i>Supprimer</x-dropdown-link>
-                                      </x-slot>
-
+                                    </x-slot>
+                                    <x-slot name="content">
+                                        <x-dropdown-link href="{{route('demande.view',$demande)}}"><i class="fa-regular fa-pen-to-square mr-2"></i>Gérer</x-dropdown-link>
+                                        <x-dropdown-link x-on:click.prevent="$dispatch('open-modal', 'confirm-demande{{$demande->id}}-deletion')"><i class="fa-regular fa-trash-can mr-2"></i>Supprimer</x-dropdown-link>
+                                    </x-slot>
                                 </x-dropdown>
                             </td>
                         </tr>
+                        
+                        <x-modal name="confirm-demande{{$demande->id}}-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+
+                            <div class="p-6 text-center">
+                                <form action="{{route('demande.destroy',$demande)}}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <svg aria-hidden="true" class="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+
+                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Êtes-vous sure de supprimer cet demande ?</h3>
+
+                                    <button type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                                        Oui, Supprimer!
+                                    </button>
+
+                                </form>
+                                {{-- <button x-on:click.prevent="$dispatch('close-modal', 'confirm-demande{{$demande->id}}-deletion')"class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">No, cancel</button> --}}
+                            </div>
+                        </x-modal>
+
                         @endforeach
                     </tbody>
 
                 </table>
+
+
 
             </div>
         </div>

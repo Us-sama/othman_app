@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->route('demande.list');
         }
         if ($user->hasRole('admin')) {
-            return redirect()->route('users.list');
+            return redirect()->route('user.list');
         }
 
         return redirect('/dashboard');

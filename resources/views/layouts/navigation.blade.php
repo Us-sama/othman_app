@@ -20,13 +20,16 @@
                     <x-nav-link :href="route('demande.list')" :active="request()->routeIs('demande.list')">
                         {{ __('Demandes') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('users.list')" :active="request()->routeIs('users.list')">
+                    <x-nav-link :href="route('formation.list')" :active="request()->routeIs('formation.list')">
+                        {{ __('Formations') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('user.list')" :active="request()->routeIs('user.list')">
                         {{ __('Utilisateurs') }}
                     </x-nav-link>
                     @endrole
 
                     @role('admin')
-                    <x-nav-link :href="route('users.list')" :active="request()->routeIs('users.list')">
+                    <x-nav-link :href="route('user.list')" :active="request()->routeIs('user.list')">
                         {{ __('Utilisateurs') }}
                     </x-nav-link>
                     @endrole
@@ -34,6 +37,9 @@
                     @role('agent')
                     <x-nav-link :href="route('demande.list')" :active="request()->routeIs('demande.list')">
                         {{ __('Demandes') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('formation.list')" :active="request()->routeIs('formation.list')">
+                        {{ __('Formations') }}
                     </x-nav-link>
                     @endrole
 

@@ -74,6 +74,7 @@
                                 </span>
                                 Demande(s)
                             </div>
+                            <a href="{{route('formation.view' , $formation)}}"><i class="fa-regular fa-eye"></i></a>
                         </div>
                     </li>
                     @endforeach

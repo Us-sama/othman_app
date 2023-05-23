@@ -76,6 +76,47 @@ class DemandeController extends Controller
         $formations = Formation::all();
         return view('demandes.view', compact('demande','demandeur','formations'));
     }
+    public function accepter($demande){
+        $demande = Demande::findOrFail($demande);
+
+        $demande->status = 'Acceptée';
+        $demande->save();
+
+         return redirect()->back()->with('success', 'Demande a bien été acceptée. ');
+    }
+    public function rejeter($demande){
+        $demande = Demande::findOrFail($demande);
+
+        $demande->status = 'Rejetée';
+        $demande->save();
+
+         return redirect()->back()->with('success', 'Demande a bien été refusée. ');
+    }
+    public function admis($demande){
+        $demande = Demande::findOrFail($demande);
+
+        $demande->status = 'Admis';
+        $demande->save();
+
+         return redirect()->back()->with('success', 'Demande a bien été admis. ');
+    }
+    public function nonAdmis($demande){
+        $demande = Demande::findOrFail($demande);
+
+        $demande->status = 'Non admis';
+        $demande->save();
+
+         return redirect()->back()->with('success', 'Demande non admis. ');
+    }
+    public function recupere($demande){
+        $demande = Demande::findOrFail($demande);
+
+        $demande->status = 'Recuperé';
+        $demande->save();
+
+         return redirect()->route('demande.list')->with('success', 'Permis est bien recuperé. ');
+    }
+
     public function storePaymentFile(Request $request, $demande)
     {
         $demande = Demande::findOrFail($demande);
@@ -85,7 +126,7 @@ class DemandeController extends Controller
         $filename = "{$date}_payment_{$file->getClientOriginalName()}";
         $path = $file->storeAs('demandes/' . $filename);
 
-        $demande->status = 'Payé/en cours';
+        $demande->status = 'Payée';
         $demande->payment_file = $filename;
         $demande->save();
 
@@ -94,7 +135,7 @@ class DemandeController extends Controller
 
     public function attachFormation(Request $request, $demande){
         $demande = Demande::findOrFail($demande);
-        $demande->status = 'Approuvé';
+        $demande->status = 'En formation';
         $formation = Formation::findOrFail($request->input('formation'));
         $formation->demandes()->save($demande);
         $demande->save();

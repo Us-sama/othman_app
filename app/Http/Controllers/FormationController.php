@@ -35,7 +35,7 @@ class FormationController extends Controller
 
     public function view($formation){
         $formation = Formation::findOrFail($formation);
-        $demandes = $formation->demandes();
-        return view('formation.view' , compact('formation', 'demandes'));
+        $demandes = $formation->demandes;
+        return view('formations.view' , compact('formation', 'demandes'));
     }
 }

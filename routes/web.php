@@ -39,6 +39,12 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/demandes/{demande}/view',[DemandeController::class, 'view'])->name('demande.view');
         Route::put('/demands/{demand}', [DemandeController::class, 'update'])->name('demande.update');
+
+        Route::post('/demands/{demande}/accept', [DemandeController::class, 'accepter'])->name('demande.accepter');
+        Route::post('/demands/{demande}/rejeter', [DemandeController::class, 'rejeter'])->name('demande.rejeter');
+        Route::post('/demands/{demande}/admis', [DemandeController::class, 'admis'])->name('demande.admis');
+        Route::post('/demands/{demande}/non_admis', [DemandeController::class, 'nonAdmis'])->name('demande.non_admis');
+        Route::post('/demands/{demande}/recupere', [DemandeController::class, 'recupere'])->name('demande.recupere');
         Route::post('/demands/{demande}/add_paiement', [DemandeController::class, 'storePaymentFile'])->name('demande.storePaymentFile');
         Route::get('demande/download/{filename}',[DemandeController::class, 'downloadFile'])->name('demande.downloadFile');
 
@@ -58,9 +64,11 @@ Route::middleware('auth')->group(function () {
 
     //Formations
     Route::get('/formations',[FormationController::class, 'index'])->name('formation.list');
+    Route::get('/formations/{formation}/view',[FormationController::class, 'view'])->name('formation.view');
     Route::post('/formations/store',[FormationController::class, 'store'])->name('formation.store');
     Route::get('/formations/{formation}/view',[FormationController::class, 'view'])->name('formation.view');
     Route::delete('/formations/{formation}/delete',[FormationController::class, 'destroy'])->name('formation.destroy');
+
 
 
 

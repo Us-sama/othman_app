@@ -20,6 +20,7 @@
 
         {{-- datePicker --}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/datepicker.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/js-datepicker/dist/datepicker.min.css">
 
         <link
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap"
@@ -54,5 +55,6 @@
                 {{ $slot }}
             </main>
         </div>
+        <script src="https://unpkg.com/js-datepicker"></script>
     </body>
 </html>

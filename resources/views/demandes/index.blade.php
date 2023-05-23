@@ -64,16 +64,29 @@
                                 @if($demande->status === 'En attente')
                                 <span class="bg-gray-100 text-gray-800 font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-gray-700 dark:text-gray-300"> {{ $demande->status }}</span>
                                 @endif
-                                @if($demande->status === 'Approuvé')
-                                <span class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-green-900 dark:text-green-300"> {{ $demande->status }}</span>
+
+                                @if($demande->status === 'Acceptée')
+                                <span class="bg-cyan-100 text-cyan-900 font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-gray-700 dark:text-gray-300"> {{ $demande->status }}</span>
                                 @endif
-                                @if($demande->status === 'Rejeté')
+                                @if($demande->status === 'Rejetée')
                                 <span class="bg-red-100 text-red-800 font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-red-900 dark:text-red-300"> {{ $demande->status }}</span>
                                 @endif
-                                @if($demande->status === 'Payé/en cours')
+                                @if($demande->status === 'En formation')
+                                <span class="bg-amber-100 text-amber-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-green-900 dark:text-green-300"> {{ $demande->status }}</span>
+                                @endif
+                                @if($demande->status === 'Payée')
                                 <span class="bg-blue-100 text-blue-800 font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-blue-900 dark:text-blue-300"> {{ $demande->status }}</span>
                                 @endif
-                            </td>
+                                @if($demande->status === 'Admis')
+                                <span class="bg-blue-100 text-blue-800 font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-blue-900 dark:text-blue-300"> {{ $demande->status }}</span>
+                                @endif
+                                @if($demande->status === 'Non admis')
+                                <span class="bg-red-100 text-red-800 font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-red-900 dark:text-red-300"> {{ $demande->status }}</span>
+                                @endif
+                                @if($demande->status === 'Recuperé')
+                                <span class="bg-cyan-100 text-cyan-900 font-medium mr-2 px-2.5 py-0.5 rounded-full text-xs dark:bg-gray-700 dark:text-gray-300"> {{ $demande->status }}</span>
+                                @endif
+                            </td> 
                             <td><i class="fa-regular fa-clock mr-2"></i>{{ $demande->created_at }}</td>
                             <td class="flex justify-end">
                                 <x-dropdown>
@@ -87,7 +100,7 @@
                                 </x-dropdown>
                             </td>
                         </tr>
-                        
+
                         <x-modal name="confirm-demande{{$demande->id}}-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
 
                             <div class="p-6 text-center">

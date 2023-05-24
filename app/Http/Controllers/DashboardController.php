@@ -33,10 +33,15 @@ class DashboardController extends Controller
         $labels = $statusCounts->pluck('status');
         $data = $statusCounts->pluck('count');
         $backgroundColor = [
+            '#f5d9a8',
             '#ff6384',
-            '#36a2eb',
-            '#a3e635',
+            '#F5A9A9',
+            '#42cba5',
+            '#292961',
             '#7c3aed',
+            '#a3e635',
+            '#36a2eb',
+
         ];
 
         // Encode the data as JSON

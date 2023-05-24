@@ -11,7 +11,7 @@
                 <div class="grid gap-6 mb-6 md:grid-cols-2 m-6">
                     <div class="mx-auto w-full overflow-hidden px-6 border-r-2 border-grey-600 ">
                         <div class="mb-6">
-                            <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-xl lg:text-xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"><i class="fa-solid fa-folder mr-2"></i>État génerale des formations et des demandes.</span> </h1>
+                            <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-xl lg:text-xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"><i class="fa-solid fa-folder mr-2"></i>État génerale des formations leurs demandes.</span> </h1>
                         </div>
                         <canvas
                         data-te-chart="bar"
@@ -21,9 +21,9 @@
                         </canvas>
                     </div>
                     <div>
-                        <div class="mx-auto w-3/5 overflow-hidden ">
+                        <div class="mx-auto w-4/5 overflow-hidden ">
                             <div class="">
-                                <h2></h2>
+                                <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-xl lg:text-xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"><i class="fa-solid fa-file-lines mr-2"></i>État génerale des demandes et leurs status.</span> </h1>
                             </div>
                             {{-- <div class="">
                                 <h1 class="mb-4 text-xl font-extrabold text-gray-900 dark:text-white md:text-xl lg:text-xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400"><i class="fa-solid fa-folder mr-2"></i>État génerale des demandes</span> </h1>

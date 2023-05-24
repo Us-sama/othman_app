@@ -35,11 +35,21 @@ class DemandeController extends Controller
             $demandeData = $request->input('demande');
 
             // Check if the demandeur already exists
-            $demandeur = Demandeur::firstOrCreate(['CIN' => $demandeurData['CIN']], [
-                'Nom' => $demandeurData['Nom'],
-                'Prenom' => $demandeurData['Prenom'],
-                'birthdate' => $demandeurData['birthdate'],
-            ]);
+                $demandeur = Demandeur::where('CIN', $demandeurData['CIN'])->first();
+
+                if ($demandeur) {
+                    // Return a message indicating that the CIN already exists
+                    session()->flash('error', 'Le demandeur avec le CIN fourni existe déjà.');
+                    return redirect()->back();
+                }
+
+                // If the demandeur doesn't exist, create a new one
+                $demandeur = Demandeur::create([
+                    'CIN' => $demandeurData['CIN'],
+                    'Nom' => $demandeurData['Nom'],
+                    'Prenom' => $demandeurData['Prenom'],
+                    'birthdate' => $demandeurData['birthdate'],
+                ]);
 
             // Save the uploaded file with a unique filename
             $file = $request->file('demand_files');

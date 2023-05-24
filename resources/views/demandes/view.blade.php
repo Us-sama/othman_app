@@ -161,21 +161,21 @@
                     <h5 class="mb-2 text-2xl font-semibold tracking-tight text-red-900 dark:text-white"><i class="fa-solid fa-money-check-dollar mr-2"></i>Demande Refusée</h5>
                 </a>
 
-                <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Vous pouvez accepter cette demande.
+                {{-- <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Vous pouvez accepter cette demande.
                     <br>
                     Appuyer sur le bouton si dessous pour accepter la demande
-                </p>
+                </p> --}}
                  {{-- <a href="#" x-on:click.prevent="$dispatch('open-modal', 'confirm-demande{{$demande->id}}-payement')">
                     <i class="fa-regular fa-credit-card mr-2"></i>
                     Ajouter le paiement
                 </a> --}}
-                <form action="{{route('demande.accepter' ,$demande)}}" method="POST">
+                {{-- <form action="{{route('demande.accepter' ,$demande)}}" method="POST">
                     @csrf
                     <button type="submit" class="w-full text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
                         <i class="fa-regular fa-circle-check mr-2"></i>
                         Accepter
                     </button>
-                </form>
+                </form> --}}
             </div>
 
 
@@ -264,12 +264,12 @@
                     <h5 class="mb-6 text-2xl font-semibold tracking-tight text-Emerald-900 dark:text-white">
                         <i class="fa-solid fa-book-open mr-2"></i>
                         Permis recupéré.</h5>
+                    </div>
+                    @endif
+                </div>
             </div>
-            @endif
-        </div>
-    </div>
 
-    @if(!$demande->payment_file)
+    @if(!$demande->payment_file && $demande->status !='Rejetée')
 
     <div class="block w-full p-6 text-center bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 " >
         <h2 class="text-rose-500 font-semibold">Veuiller ajouter un paiement pour pouvoir continuer.</h2>
@@ -284,20 +284,18 @@
 
                 Clicker ici pour confirmer la reception
             </button>
-
         </form>
     </div>
 
-    @elseif($demande->status == 'Non admis' || $demande->status == 'Recuperé' )
-
+    @elseif($demande->status == 'Non admis' || $demande->status == 'Recuperé' || $demande->status == 'Rejetée')
     {{-- nothing --}}
-
     @else
-        <div class="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 " >
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Affecter a une formation') }}
-            </h2>
-            <div class="my-4">
+
+    <div class="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 " >
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Affecter a une formation') }}
+        </h2>
+        <div class="my-4">
                 <form action="{{route('demande.attachFormation',$demande)}}" method="POST">
                     @csrf
                     <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Selectionner une formation</label>

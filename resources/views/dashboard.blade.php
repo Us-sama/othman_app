@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Permis de confiance') }}
+            Bonjour, <span class="text-blue-600 dark:text-blue-500">{{ Auth::user()->name }} </span>!
         </h2>
     </x-slot>
 

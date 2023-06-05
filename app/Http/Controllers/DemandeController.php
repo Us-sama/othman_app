@@ -10,6 +10,7 @@ use Illuminate\Http\Exceptions\PostTooLargeException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DemandeController extends Controller
 {
@@ -143,6 +144,21 @@ class DemandeController extends Controller
         return redirect()->back()->with('success', 'Payment file has been uploaded successfully.');
     }
 
+    public function storeResultatEnqueteFile(Request $request, $demande)
+    {
+        $demande = Demande::findOrFail($demande);
+
+        $file = $request->file('resultat_enquete');
+        $date = now()->format('YmdHis');
+        $filename = "{$date}_resultat_enquete_{$file->getClientOriginalName()}";
+        $path = $file->storeAs('demandes/' . $filename);
+
+        $demande->resultat_enquete = $filename;
+        $demande->save();
+
+        return redirect()->back()->with('success', 'Les resultats sont bien enregistrés.');
+    }
+
     public function attachFormation(Request $request, $demande){
         $demande = Demande::findOrFail($demande);
         $demande->status = 'En formation';
@@ -171,5 +187,15 @@ class DemandeController extends Controller
         Storage::delete('demandes/' . $demande_to_delete->demand_files); // delete the demand file from storage
         $demande_to_delete->delete(); // delete the demand from the database
         return redirect()->route('demande.list')->with('success', 'Demande supprimée avec succès.');
+    }
+    public function downloadPDF($demande)
+    {
+        $demande = Demande::findOrFail($demande);
+
+        $pdf = PDF::loadView('pdf.template', compact('demande'));
+
+        $fileName = $demande->demandeur->Nom.'_'.$demande->demandeur->Prenom.'.pdf';
+
+        return $pdf->download($fileName);
     }
 }

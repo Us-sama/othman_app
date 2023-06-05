@@ -46,11 +46,14 @@ Route::middleware('auth')->group(function () {
         Route::post('/demands/{demande}/non_admis', [DemandeController::class, 'nonAdmis'])->name('demande.non_admis');
         Route::post('/demands/{demande}/recupere', [DemandeController::class, 'recupere'])->name('demande.recupere');
         Route::post('/demands/{demande}/add_paiement', [DemandeController::class, 'storePaymentFile'])->name('demande.storePaymentFile');
+        Route::post('/demands/{demande}/add_resultat_enquete', [DemandeController::class, 'storeResultatEnqueteFile'])->name('demande.storeResultatEnqueteFile');
         Route::get('demande/download/{filename}',[DemandeController::class, 'downloadFile'])->name('demande.downloadFile');
 
         Route::post('/demands/{demande}/attach',[DemandeController::class, 'attachFormation'])->name('demande.attachFormation');
 
         Route::delete('/demandes/{demande}/delete',[DemandeController::class, 'destroy'])->name('demande.destroy');
+
+        Route::get('/download-pdf/{demande}', [DemandeController::class, 'downloadPDF'])->name('demande.downloadPDF');
     });
 
     //Users

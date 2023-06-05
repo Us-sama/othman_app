@@ -32,7 +32,15 @@
 </div>
 
 <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
-    <div class="grid gap-6 mb-6 md:grid-cols-2  flex justify-between  mb-4">
+    @if($demande->status == 'En attente')
+        <div class="flex justify-end">
+
+        <a class="text-white bg-[#2557D6] hover:bg-[#2557D6]/90 focus:ring-4 focus:ring-[#2557D6]/50 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-[#2557D6]/50 mr-2 mb-2" href="{{route('demande.downloadPDF',$demande)}}">
+            <i class="fa-solid fa-print mr-2"></i>
+            Génerer une demande d'enquête</a>
+        </div>
+    @endif
+    <div class="grid gap-6 mb-6 md:grid-cols-2  flex justify-between mb-4">
 
 
         <div class="block w-full p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -68,31 +76,73 @@
                         <i class="fa-solid fa-file-lines mr-2"></i>
                         Demande en attente </h5>
                 </a>
+                @if($demande->resultat_enquete)
+                <div>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Accepter ou rejeter la demande
+                    </p>
 
-                <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Accepter ou rejeter la demande
-                </p>
-                 {{-- <a href="#" x-on:click.prevent="$dispatch('open-modal', 'confirm-demande{{$demande->id}}-payement')">
-                    <i class="fa-regular fa-credit-card mr-2"></i>
-                    Ajouter le paiement
-                </a> --}}
+                    <a href="{{route('demande.downloadFile',$demande->resultat_enquete)}}" class="">
+                        <i class="fa-solid fa-download mr-2"></i>
+                        Voir les resultats d'enquête
+                    </a>
 
-                <div class="grid gap-6 mb-2 md:grid-cols-2  flex justify-between pt-4">
-                    <form action="{{route('demande.accepter' ,$demande)}}" method="POST">
-                        @csrf
-                        <button type="submit" class="w-full text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                            <i class="fa-regular fa-circle-check mr-2"></i>
-                            Accepter
-                        </button>
-                    </form>
-                    <form action="{{route('demande.rejeter' ,$demande)}}" method="POST">
-                        @csrf
-                        <button type="submit" class="w-full text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
-                            <i class="fa-regular fa-circle-xmark mr-2"></i>
-                            Rejeter
-                        </button>
-                    </form>
+                    <div class="grid gap-6 mb-2 md:grid-cols-2  flex justify-between pt-4">
+                        <form action="{{route('demande.accepter' ,$demande)}}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                <i class="fa-regular fa-circle-check mr-2"></i>
+                                Accepter
+                            </button>
+                        </form>
+                        <form action="{{route('demande.rejeter' ,$demande)}}" method="POST">
+                            @csrf
+                            <button type="submit" class="w-full text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+                                <i class="fa-regular fa-circle-xmark mr-2"></i>
+                                Rejeter
+                            </button>
+                        </form>
+                    </div>
                 </div>
+                @else
+                <div>
+                    <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">ajouter les resultats de l'enquête pour pouvoir accepter ou rejeter la demande
+                    </p>
+                    <x-primary-button
+                    x-data=""
+                    x-on:click.prevent="$dispatch('open-modal', 'add-enquete-results')"
+                    class="my-2"
+                > <i class="fa-regular fa-credit-card mr-2"></i>{{ __('Ajouter les resultats du l\'enquête') }}</x-primary-button>
 
+                <x-modal name="add-enquete-results" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                    <form method="POST" action="{{route('demande.storeResultatEnqueteFile',$demande)}}" class="p-6" enctype="multipart/form-data">
+                        @csrf
+
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ __('Ajouter les resultats du l\'enquête') }}
+                        </h2>
+
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ __('Télecharger les fichier du resultats dans la case si dessous.') }}
+                        </p>
+
+                        <div class="mt-6">
+                            <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" name="resultat_enquete" type="file">
+                        </div>
+
+                        <div class="mt-6 flex justify-end">
+                            <x-secondary-button x-on:click="$dispatch('close')">
+                                {{ __('Cancel') }}
+                            </x-secondary-button>
+
+                            <x-primary-button class="ml-3" type="submit">
+                                {{ __('Ajouter les resultats') }}
+                            </x-primary-button>
+                        </div>
+                    </form>
+                </x-modal>
+
+                </div>
+                @endif
 
             </div>
             @elseif($demande->status == 'Acceptée' )
@@ -325,9 +375,3 @@
 
 
 </x-app-layout>
-<script>
-    function openModal(){
-        window.dispatchEvent(new CustomEvent('show', { detail: 'payement-modal' }));
-        console.log('opened modal');
-    }
-</script>

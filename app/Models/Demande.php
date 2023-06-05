@@ -9,7 +9,7 @@ class Demande extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['demandeur_id', 'status', 'demand_files','created_by','payment_file'];
+    protected $fillable = ['demandeur_id', 'status', 'demand_files','created_by','payment_file','resultat_enquete'];
 
     public function demandeur()
     {
